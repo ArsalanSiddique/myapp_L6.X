@@ -86,8 +86,8 @@ class PostController extends Controller
         // ===========================================> RESPONSE WITH VALIDATION
 
         $request->validated();
-
-        return back()->withInput();
+        dd($request->all());
+        return back()->with('message','Your Form has submitted successfully.');
     }
 
     /**

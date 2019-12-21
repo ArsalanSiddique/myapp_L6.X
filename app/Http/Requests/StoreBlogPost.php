@@ -24,11 +24,21 @@ class StoreBlogPost extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required',
-            'content' => 'required',
-            'skills' => 'required',
-            'gender' => 'required',
-            'profile' => 'required',
+            // 'name' => 'required|alpha_dash',             abc_abc-abc
+            // 'name' => 'required'|alpha,                  asjdkasjdkajs
+            // 'name' => 'required'|alpha_num,              asjdkasjdkajs8273198292
+            // 'name' => 'bail|required|alpha',
+            'email' => 'bail|required|email:rfc,filter',
+            // 'password' => 'bail|digits_between:08,25|confirmed|required',
+            // 'content' => 'required',
+            // 'skills' => 'required|array',
+            // 'gender' => 'required',
+            // 'profile' => 'required|between:2000,8000',
+            // 'tos' => 'accepted',
+            // 'website' => 'required|active_url',
+            // 'start_date' => 'bail|required|date|after:today',
+            // 'end_date' => 'bail|required|date|date_equals:start_date|after:tomorrow',
+            // 'end_date' => 'bail|required|date|different:start_date|after:tomorrow',
         ];
     }
 
@@ -41,7 +51,9 @@ class StoreBlogPost extends FormRequest
     {
         return [
             //'required' => 'Field is required'
-            'name.required' => 'Name is required for process'
+            'name.required' => 'Name is required for process',
+            'tos.accepted' => 'Terms and Services must ne checked'
+            
         ];
     }
 
