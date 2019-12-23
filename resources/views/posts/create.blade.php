@@ -1,36 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Create Post</title>
-</head>
-<body>
-
-    <?php if($errors->any): ?>
-    <ul>
-    <?php foreach($errors->all() as $errors): ?>
-    <li><?php echo $errors; ?></li>
-    <?php endforeach; ?>
-    </ul>
-    <?php endif; ?>
-    <h2>Create New Post</h2>
-    <?php
-        if(Session::has('message')) {
-            echo Session::get('message');
-        }
-    ?>
-    <form action="<?php echo route('post.store');?>" method="post" enctype="multipart/form-data">
+@extends('layouts.posts')
+@section('title', 'Create New Post')
+@section('content')
+<form action="{{route('post.store')}}" method="post" enctype="multipart/form-data">
         @csrf
         
-        <label>name: <input type="text" name="name" id="" value="<?php echo old('name'); ?>" /></label><br />
+        <label>name: <input type="text" name="name" id="" value="{{old('name')}}" /></label><br />
+        <label>Email: <input type="text" name="email" id="" value="{{old('email')}}" /></label><br />
         <?php
+        // @if($errors->has('email'))
+        //     <div class="error">{{ $errors->first('email') }}</div>
+        // @endif
+        
         // foreach ($errors->get('email') as $message) {
         //     echo $message;
         // }
         ?>
-        <label>Email: <input type="text" name="email" id="" value="<?php echo old('email'); ?>" /></label><br />
         <label>About yourself: <br /><textarea name="content" id="" cols="30" rows="10"></textarea></label><br />
         <label>Select Skills: </label>
         <label>Php<input type="checkbox" name="skills[]" id="" value="Php"></label>
@@ -48,6 +32,5 @@
         <label>Enter Website Address: <input type="url" name="website" id="" /></label><br />
 
         <input type="submit" value="Create New Post">
-    </form>
-</body>
-</html>
+</form>
+@endsection

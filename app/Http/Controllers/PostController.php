@@ -98,7 +98,14 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        //
+        $data = [
+            'name' => 'Post Title comes here',
+            'content' => 'content of post comes here',
+            'gender' => 'Male',
+            'skills' => ['php', 'wordpress', 'laravel'],
+            'profile' => 'profile photo will comes here'
+        ];
+        return view('posts.show', compact('data'));
     }
 
     /**

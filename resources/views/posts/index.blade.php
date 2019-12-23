@@ -1,15 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Laravel 6.5</title>
-</head>
-<body>
+@extends('layouts.posts')
+@section('title', 'Static data from posts controller')
+@section('content')
+
+@component('components.messages', ['title' => '<span>Error Message</span>'])
+    <strong>Warning</strong> Something went wrong.
+@endcomponent
     <ul>
-        <li><?php echo $data['name']; ?></li>
-        <li><?php echo $data['Company']; ?></li>
+        <li>{{$data['name']}}</li>
+        <li>{{$data['Company']}}</li>
     </ul>
-</body>
-</html>
+@endsection

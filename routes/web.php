@@ -19,9 +19,9 @@
 Route::get('/home', function () {
 	return 'Hello Laravel 6.7';
 });
-Route::get('/', function () {
-	return 'Hello Laravel 6.7';
-});
+// Route::get('/', function () {
+// 	return 'Hello Laravel 6.7';
+// });
 
 
 // required dynamic params
@@ -34,8 +34,9 @@ Route::get('/name/{name?}', function ($name="Guest") {
 	return 'Hello '.$name;
 });
 
-//Route::redirect('/', '/home');	//(301 permenant & 302 temporary) for SEO
-//Route::view('/', 'welcome', ['name' => 'Arsalan','Company' => 'DevDesign']); 
+//Route::redirect('/', '/home');	// (301 permenant & 302 temporary) for SEO
+Route::redirect('/', '/welcome');	// (301 permenant & 302 temporary) for SEO
+// Route::view('/', 'welcome', ['name' => 'Arsalan','Company' => 'DevDesign']); 
 
 // controller
 Route::get('/welcome/', 'WelcomeController@welcome');

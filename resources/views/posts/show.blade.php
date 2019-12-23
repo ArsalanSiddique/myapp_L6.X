@@ -1,25 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Show Data</title>
-</head>
-<body>
-    <h2>Show Record via show method</h2>
+@extends('layouts.posts')
+@section('title', 'Show Record via show method')
+@section('content')
     <ul>
-        <li><b>Title: </b><?php echo $data['name']; ?></li>
-        <li><b>Content: </b><?php echo $data['content']; ?></li>
-        <li><b>Gender: </b><?php echo $data['gender']; ?></li>
+        <li><b>Title: </b>{{$data['name']}}</li>
+        <li><b>Content: </b>{{$data['content']}}</li>
+        <li><b>Gender: </b>{{$data['gender']}}</li>
         <li><b>SKills: </b>
-            <?php 
+            @php
                 $i = 0;
                 $count = count($data['skills']);
                 while($i < $count ){ echo $data['skills'][$i].' ';  $i++; } 
-            ?>
+            @endphp
         </li>
-        <li><?php echo $data['profile']; ?></li>
+        <li><b>Profile: </b>{{$data['profile']}}</li>
     </ul> 
-</body>
-</html>
+@endsection
