@@ -80,8 +80,30 @@
             @endif
 
             <div class="content">
+            @php
+                $data1 = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20];
+                $data2 = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20];
+            @endphp
+            {{-- loop variables || Decomment to view loop variables--}}
+            {{-- @foreach($data1 as $rows1) --}}
+                {{--    @foreach($data2 as $rows2) --}}
+                    {{-- @if($loop->even) --}}
+                        <!-- <span style="color:red;">{{-- $rows2 --}}</span> -->
+                        {{-- @else --}}
+                        <!-- <span style="color:yellow;">{{-- $rows2 --}}</span> -->
+                        {{-- @endif --}}
+                            {{-- @php --}}
+                                {{-- dd($loop->depth); --}}
+                                    {{-- dd($loop); --}}
+                                        {{-- @endphp --}}
+                                            {{-- @endforeach --}}
+                                                {{-- @php --}}
+                                                    {{-- dd($loop->depth); --}}
+                                                        {{-- @endphp  --}}
+                <!-- <br />   -->
+                {{-- @endforeach --}}
                 <div class="title m-b-md">
-                    Laravel <br /> {{ $data["Company"] }} <br /> {{ $data["name"] }}
+                Laravel 6.7 <br /> {{ $data["Company"] }} <br /> {{ $data["name"] }}
                 </div>
 
                 <div class="links">

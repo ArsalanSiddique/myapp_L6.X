@@ -9,7 +9,7 @@ class Post extends Model
     public function data() {
         return [
             'name' => 'Arsalan Ahmed Siddique',
-            'Company' => 'DevDesign'
+            'Company' => 'DevDesigns'
         ];
     }
 }

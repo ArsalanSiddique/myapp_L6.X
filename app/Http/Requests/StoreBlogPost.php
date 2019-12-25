@@ -24,15 +24,15 @@ class StoreBlogPost extends FormRequest
     public function rules()
     {
         return [
-            // 'name' => 'required|alpha_dash',             abc_abc-abc
-            // 'name' => 'required'|alpha,                  asjdkasjdkajs
-            // 'name' => 'required'|alpha_num,              asjdkasjdkajs8273198292
+            'name' => 'required|alpha_dash',             // abc_abc-abc
+            // 'name' => 'required'|alpha,                //  asjdkasjdkajs
+            // 'name' => 'required'|alpha_num,             // asjdkasjdkajs8273198292
             // 'name' => 'bail|required|alpha',
             'email' => 'bail|required|email:rfc,filter',
             // 'password' => 'bail|digits_between:08,25|confirmed|required',
             // 'content' => 'required',
             // 'skills' => 'required|array',
-            // 'gender' => 'required',
+            'gender' => 'required',
             // 'profile' => 'required|between:2000,8000',
             // 'tos' => 'accepted',
             // 'website' => 'required|active_url',
