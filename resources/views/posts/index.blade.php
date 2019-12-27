@@ -5,8 +5,19 @@
 @component('components.messages', ['title' => '<span>Error Message</span>'])
     <strong>Warning</strong> Something went wrong.
 @endcomponent
-    <ul>
-        <li>{{$data['name']}}</li>
-        <li>{{$data['Company']}}</li>
-    </ul>
+    <!-- <ul>
+        <li>{{-- $data['name'] --}}</li>
+        <li>{{-- $data['Company'] --}}</li>
+    </ul> -->
+    <hr>
+    <hr>
+    <hr>
+    
+    @foreach($data as $dt)
+        {{ $data[0]->name }}
+    @endforeach
+
+
+
+
 @endsection

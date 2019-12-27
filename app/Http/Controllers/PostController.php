@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreBlogPost;
 use App\Post;
+use DB;
+
 
 class PostController extends Controller
 {
@@ -44,9 +46,31 @@ class PostController extends Controller
         //     dd();
         // }
         
-        $posts = new Post();
-        $data = $posts->data();
-        return view('posts.index', compact('data'));
+
+        // CRUD Operations || RAW SQL QUERIES
+        // ===================================================================
+        // $profile = DB::select("SELECT * FROM profile");
+        // $profile = DB::select("SELECT * FROM profile WHERE id = ?", [2]);
+        // $profile = DB::select("SELECT * FROM profile WHERE id = :id AND name = :name", ["id" => 02, "name" => "Minhaj Ansari"]);
+        // $profile = DB::select("INSERT INTO profile (`name`, `city`, `country`) VALUES (:name, :city, :country)", ["name" => "Kamran", "city" => "Karachi", "country" => "Pakistan"]);
+        // $profile = DB::select("UPDATE profile SET `name` = 'Kashan Ahmed' WHERE id = :id", ["id" => 02]);
+        // $profile = DB::delete("DELETE FROM profile WHERE id = :id", ["id" => 02]);
+        // $profile = DB::statement('drop table users');
+        // dd($profile);
+
+
+        // QUERY BUILDER || Tinker || php artisan tinker
+        // ===================================================================
+        // $profile = DB::table('profile')->get();
+        // dd($profile);
+        // return view('posts.index', ["data" => $profile]);    // Pasing data to view
+
+
+        // Getting Data from model and pass it to view(index.blade.php)
+        // ===================================================================
+        // $posts = new Post();
+        // $data = $posts->data();
+        // return view('posts.index', compact('data'));
     }
 
     /**
