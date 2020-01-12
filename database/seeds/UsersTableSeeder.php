@@ -17,6 +17,7 @@ class UsersTableSeeder extends Seeder
         //     'password' => Hash::make('admin'),
         // ]);
         factory(App\User::class, 3)->create();
-        factory(App\Post::class, 10)->create();
+        // factory(App\Post::class, 10)->create();
+        // factory(App\UserProfile::class, 3)->create();
     }
 }

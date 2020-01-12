@@ -3,6 +3,9 @@
 namespace App;
 use App\Scopes\NotVerifiedUsers;
 use App\Scopes\VerifiedUsers;
+use App\UserProfile;
+use App\Post;
+use App\Role;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Scope;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -75,20 +78,37 @@ class User extends Authenticatable
 
 
 
-    // local scope
+    //  ================ local scope
     // $user->ById(1)->get();
     public function scopeById($query, $id) {
         return $query->where('id', $id);
     }
 
-    public function scopevfu($query) {
+    public function scopeVfu($query) {
         return $query->where('email_verified_at', '<>', null);
     }
 
-    public function scopeNvfu($cubrid_query(query)) {
+    public function scopeNvfu($query) {
         return $query->where('email_verified_at', '=', null);
     }
 
 
+    // ==================== ORM Relationship
+    // One to One Realation
+
+    public function profile() {
+        return $this->hasOne(UserProfile::class, 'user_id', 'id');
+        // ===Syntax return $query->hasOne('MODELNAME::class', 'FOREIGN KEY', 'PRIMARY KEY');
+    }
+
+    // One to Many Realation
+    public function post() {
+        return $this->hasMany(Post::class, 'user_id', 'id');
+    }
+
+    public function roles() {
+        // pivot table <=> role_id, user_id
+        return $this->belongsToMany(Role::class, 'role_user', 'user_id', 'role_id');
+    }
 
  }
