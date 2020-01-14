@@ -111,4 +111,8 @@ class User extends Authenticatable
         return $this->belongsToMany(Role::class, 'role_user', 'user_id', 'role_id');
     }
 
+    public function country() {
+        return $this->hasOneThrough(Country::class, UserProfile::class, 'user_id', 'id', 'id', 'user_id');
+    }
+
  }

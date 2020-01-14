@@ -8,6 +8,7 @@
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="{{asset('css/app.css')}}">
 
         <!-- Styles -->
         <style>
@@ -103,9 +104,36 @@
                 <!-- <br />   -->
                 {{-- @endforeach --}}
                 <div class="title m-b-md">
-                Laravel 6.7 <br /> {{ $data["Company"] }} <br /> {{ $data["name"] }}
+                
+                    <!-- Laravel 6.7 <br /> {{-- $Company --}} <br /> {{-- $name --}} -->
+                    
                 </div>
-
+                <div class="table-responsive">
+                        <table class="table table-hover table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Address</th>
+                                    <th>Country</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($users as $user)
+                                    <!-- @if($user->profile->country != null) -->
+                                    <tr>
+                                        <td>{{$user->name}}</td>
+                                        <td>{{$user->email}}</td>
+                                        <td>{{$user->profile->phone}}</td>
+                                        <td>{{$user->profile->address}}</td>
+                                        <td>{{$user->profile->country->name}}</td>
+                                    </tr>
+                                    <!-- @endif --> 
+                                @endforeach
+                            </tbody>
+                       </table>
+                    </div>
                 <div class="links">
                     <a href="https://laravel.com/docs">Docs</a>
                     <a href="https://laracasts.com">Laracasts</a>
