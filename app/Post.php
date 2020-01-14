@@ -16,4 +16,10 @@ class Post extends Model
     public function user() {
     	return $this->belongsto(User::class, 'user_id', 'id');
     }
+
+    public function profile() {
+    	return $this->hasOneThrough(UserProfile::class, User::class, 'id', 'user_id', 'user_id', 'id');
+    }
+
+
 }
