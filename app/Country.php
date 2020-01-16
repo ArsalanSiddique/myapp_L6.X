@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Country extends Model
 {
-    protected $guard = [];  //
+    protected $guarded = [];  //
 
 
     public function posts() {

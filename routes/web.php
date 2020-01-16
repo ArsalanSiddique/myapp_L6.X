@@ -42,8 +42,22 @@ Route::redirect('/', '/welcome');	// (301 permenant & 302 temporary) for SEO
 Route::get('/welcome/', 'WelcomeController@welcome');
 
 
-// resource controller
-Route::resource('post', 'PostController');
+// resource controllers for CMS
+Route::view('/admin', 'dashboard.admin');
+Route::resource('posts', 'PostController');
+Route::resource('roles', 'RoleController');
+Route::resource('users', 'UserController');
+Route::resource('profile', 'UserProfileController');
+Route::resource('pages', 'PageController');
+Route::resource('categories', 'CategoryController');
+
+
+
+
+
+
+
+
 
 
 
