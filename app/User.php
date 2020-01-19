@@ -112,7 +112,7 @@ class User extends Authenticatable
     }
 
     public function country() {
-        return $this->hasOneThrough(Country::class, UserProfile::class, 'user_id', 'id', 'id', 'user_id');
+        return $this->hasOneThrough(Country::class, UserProfile::class, 'user_id', 'id', 'id', 'country_id');
     }
 
  }

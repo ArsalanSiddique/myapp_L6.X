@@ -43,13 +43,19 @@ Route::get('/welcome/', 'WelcomeController@welcome');
 
 
 // resource controllers for CMS
-Route::view('/admin', 'dashboard.admin');
-Route::resource('posts', 'PostController');
-Route::resource('roles', 'RoleController');
-Route::resource('users', 'UserController');
-Route::resource('profile', 'UserProfileController');
-Route::resource('pages', 'PageController');
-Route::resource('categories', 'CategoryController');
+
+Route::prefix('admin')->group(function(){
+	Route::view('/', 'dashboard.admin');
+	Route::resource('posts', 'PostController');
+	Route::resource('roles', 'RoleController');
+	Route::resource('users', 'UserController');
+	Route::resource('profile', 'UserProfileController');
+	Route::resource('pages', 'PageController');
+	Route::resource('categories', 'CategoryController');
+});
+
+
+
 
 
 

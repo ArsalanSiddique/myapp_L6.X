@@ -14,7 +14,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        $categories = Category::with('children')->get();
+        return view('categories.index', compact('categories'));
     }
 
     /**
@@ -24,7 +25,8 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Category::all();
+        return view('categories.create', compact('categories'));
     }
 
     /**
@@ -35,7 +37,22 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $category = new Category();
+        $category->title = $request->title;
+        $category->content = $request->content;
+        $category->parent_id = $request->parent_id;
+        
+        $filename = sprintf('images_%s.jpg', random_int(1, 1000));
+        if($request->hasFile('thumbnail')) {
+            $image = $request->file('thumbnail')->storeAs('images', $filename);
+        }else {
+            $image = null;
+        }
+        $category->thumbnail = $image;
+        $saved = $category->save();
+        if($saved)
+            return redirect()->route('categories.index');
+
     }
 
     /**
@@ -46,7 +63,10 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        //
+        $categories = Category::find($category)->first();
+        // $categories = $categories[0];
+        return view('categories.show', compact('categories'));
+        // dd($categories[0]);
     }
 
     /**
@@ -57,7 +77,8 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        //
+        $categories = Category::all();
+        return view('categories.edit', compact('category', 'categories'));
     }
 
     /**
@@ -69,7 +90,25 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        //
+        $category->title = $request->title;
+        $category->content = $request->content;
+        $category->parent_id = $request->parent_id;
+        
+        $filename = sprintf('images_%s.jpg', random_int(1, 1000));
+        if($request->hasFile('thumbnail')) {
+            $image = $request->file('thumbnail')->storeAs('images', $filename);
+        }else {
+            $image = null;
+        }
+        $category->thumbnail = $image;
+        // $category->thumbnail = $image == null ?? $category->thumbnail;
+        if($category->thumbnail == null)
+            $category->thumbnail;
+
+        
+        $saved = $category->save();
+        if($saved)
+            return redirect()->route('categories.index');
     }
 
     /**
@@ -80,6 +119,7 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        $category->delete();
+        return redirect()->route('categories.index');
     }
 }

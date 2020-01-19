@@ -12,7 +12,7 @@ class UserProfile extends Model
 
     use SoftDeletes;
 
-    protected $guard = [];  //
+    protected $guarded = [];  //
 
 
 
