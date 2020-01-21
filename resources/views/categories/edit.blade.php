@@ -42,7 +42,7 @@
 				    @endif
 			    </select>
 			  </div>
-			  <button type="submit" class="btn btn-primary">Add Category</button>
+			  <button type="submit" class="btn btn-primary">Update Category</button>
 			</form>
 		</div>
 	</div>

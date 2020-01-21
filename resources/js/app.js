@@ -5,3 +5,16 @@
  */
 
 require('./bootstrap');
+require('tinymce/themes/silver');
+require('tinymce/plugins/image');
+require('tinymce/plugins/imagetools');
+require('tinymce/plugins/code');
+import tinymce from 'tinymce';
+tinymce.init({
+	selector: 'textarea#inputCategoryContent',
+	plugins: 'image imagetools code',
+	height: 400,
+	skin: false,
+	content_css: false,
+	
+})

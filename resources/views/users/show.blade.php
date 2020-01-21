@@ -31,7 +31,7 @@
             <tr>
               <td>{{$i}}</td>
               <td>{{$user->name}}</td>
-              <td><img src="{{asset('/'.$user->profile->photo)}}" width="50" height="50" class="img-fluid" /></td>
+              <td><img src="{{asset('storage/'.$user->profile->photo)}}" width="50" height="50" class="img-fluid" /></td>
               <td>{{$user->profile->city}}</td>
               <td>{{$user->country->name}}</td>
               <td>

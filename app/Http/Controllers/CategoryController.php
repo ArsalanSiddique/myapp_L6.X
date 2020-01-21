@@ -44,7 +44,7 @@ class CategoryController extends Controller
         
         $filename = sprintf('images_%s.jpg', random_int(1, 1000));
         if($request->hasFile('thumbnail')) {
-            $image = $request->file('thumbnail')->storeAs('images', $filename);
+            $image = $request->file('thumbnail')->storeAs('images', $filename, 'public');
         }else {
             $image = null;
         }
@@ -96,7 +96,7 @@ class CategoryController extends Controller
         
         $filename = sprintf('images_%s.jpg', random_int(1, 1000));
         if($request->hasFile('thumbnail')) {
-            $image = $request->file('thumbnail')->storeAs('images', $filename);
+            $image = $request->file('thumbnail')->storeAs('images', $filename, 'public');
         }else {
             $image = null;
         }

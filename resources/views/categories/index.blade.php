@@ -30,8 +30,7 @@
         		<tr>
         			<td>{{$i}}</td>
         			<td>{{$category->title}}</td>
-              <td><img src="/var/www/html/myapp/storage/app/images/{{$category->thumbnail}}" width="50" height="50" /></td>
-              <!-- <td><img src="/{{ $category->thumbnail }}"></td> -->
+              <td><img src="{{asset('storage/'.$category->photo)}}" width="50" height="50" /></td>
         			<td>
                 @foreach($category->children as $children)
                 {{$children->title}}

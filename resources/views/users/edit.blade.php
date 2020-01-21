@@ -40,8 +40,8 @@
 			    <label for="InputCity"><b>Select City: </b></label>
 			    <input type="text" name="city" class="form-control" id="InputCity" value="{{$user->profile->city}}">
 			  <div class="form-group">
-			    <label for="inputUserPhoto"><b>Profile Image: </b></label>
-			    <img src="{{asset($user->profile->photo)}}" width="50px" height="50px" />
+			    <label for="inputUserPhoto"><b>Profile Image: </b></label><br />
+			    <img src="{{asset('storage/'.$user->profile->photo)}}" class="img-fluid" width="150px" height="150px" />
 			    <input type="file" name="photo" class="form-control" id="inputUserPhoto">
 			  </div>
 			  <div class="form-group">
@@ -60,7 +60,7 @@
 				    @endif
 			    </select>
 			  </div>
-			  <button type="submit" class="btn btn-primary">Add Category</button>
+			  <button type="submit" class="btn btn-primary">Update User</button>
 			</form>
 		</div>
 	</div>

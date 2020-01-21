@@ -57,7 +57,7 @@
 				    @endif
 			    </select>
 			  </div>
-			  <button type="submit" class="btn btn-primary">Add Category</button>
+			  <button type="submit" class="btn btn-primary">Add User</button>
 			</form>
 		</div>
 	</div>

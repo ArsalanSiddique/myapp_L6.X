@@ -39,19 +39,22 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $user = [
-            'name' => $request->fullname,
             'username' => $request->username,
-            'user' => $request->name,
+            'name' => $request->fullname,
             'email' => $request->email,
             'password' => bcrypt($request->password),
         ];
         $user = \App\User::create($user);
         
-        $filename = sprintf('photo_%s.jpg', random_int(1, 1000));
-        if($request->hasFile('photo_')) {
+        
+        
+
+        if($request->hasFile('photo')) {
+            $fileExtension = $request->File('photo')->getClientOriginalExtension();
+            $filename = sprintf('photo_%s.'.$fileExtension, random_int(1, 1000));
             $Userphoto = $request->file('photo')->storeAs('profiles', $filename, 'public');
         }else {
-            $Userphoto = 'null';
+            $Userphoto = 'profiles/dummy.jpg';
         }
         
         $profile = new \App\UserProfile([
@@ -104,12 +107,11 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $user = \App\User::find($id);
-        $user->username = $user->username;
         $user->name = $request->fullname;
         $user->email = $request->email;
         
         $filename = sprintf('photo_%s.jpg', random_int(1, 1000));
-        if($request->hasFile('photo_')) {
+        if($request->hasFile('photo')) {
             $Userphoto = $request->file('photo')->storeAs('profiles', $filename, 'public');
         }else {
             $Userphoto = $user->profile->photo;

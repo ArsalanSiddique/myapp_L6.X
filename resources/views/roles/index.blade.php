@@ -31,7 +31,12 @@
         			<td>{{$role->name}}</td>
         			<td>{{$role->created_at}}</td>
         			<td>{{$role->updated_at}}</td>
-        			<td></td>
+        			<td>
+                @if(!$role->roles->isEmpty())
+                  {{$role->roles->implode('name', ', ')}}
+                @endif
+                
+              </td>
         			<td>
         				<div class="btn-group btn-sm" role="group" aria-label="Basic example" style="line-height: 32px; font-size:18px; color: blue;">
         				  <a href="{{route('roles.show', $role->id)}}" role="button" class="btn btn-link">Show</a> |
