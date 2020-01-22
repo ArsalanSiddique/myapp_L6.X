@@ -16,12 +16,12 @@
 			  </div>
 			  <div class="form-group">
 			    <label for="inputCategoryThumbnail"><b>Thumbnail Image: </b></label>
-			    <img src="{{asset($category->thumbnail)}}" width="50px" height="50px" />
+			    <img src="{{asset('storage/'.$category->thumbnail) }}" width="50px" height="50px" />
 			    <input type="file" name="thumbnail" class="form-control" id="inputCategoryThumbnail">
 			  </div>
 			  <div class="form-group">
 			    <label for="inputCategoryContent"><b>Category Content: </b></label>
-			    <textarea name="content" class="form-control" id="inputCategoryContent">{{$category->content}}</textarea>
+			    <textarea name="content" class="form-control" id="inputCategoryContent">{!! $category->content !!}</textarea>
 			  </div>
 			  <div class="form-group">
 			    <label for="selectParent"><b>Select Parent: </b></label>

@@ -100783,10 +100783,24 @@ __webpack_require__(/*! tinymce/plugins/code */ "./node_modules/tinymce/plugins/
 
 tinymce__WEBPACK_IMPORTED_MODULE_0___default.a.init({
   selector: 'textarea#inputCategoryContent',
-  plugins: 'image imagetools code',
+  plugins: 'image code',
   height: 400,
   skin: false,
-  content_css: false
+  content_css: false,
+  image_title: true,
+
+  /* we override default upload handler to simulate successful upload*/
+  images_upload_handler: function images_upload_handler(blobInfo, success, failure) {
+    // setTimeout(function () {
+    //	 /* no matter what you upload, we will turn it into TinyMCE logo :)*/
+    // 		success('http://moxiecode.cachefly.net/tinymce/v9/images/logo.png');
+    // }, 2000);
+    var formData = new FormData();
+    formData.append('file', blobInfo.blob());
+    axios.post('/admin/upload', formData).then(function (res) {
+      success(res.data.location);
+    });
+  }
 });
 
 /***/ }),

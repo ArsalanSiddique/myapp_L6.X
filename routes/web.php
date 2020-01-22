@@ -52,6 +52,23 @@ Route::prefix('admin')->group(function(){
 	Route::resource('profile', 'UserProfileController');
 	Route::resource('pages', 'PageController');
 	Route::resource('categories', 'CategoryController');
+	Route::post('upload', function() {
+		
+		if(request()->hasFile('file')) {
+            $fileExtension = request()->File('file')->getClientOriginalExtension();
+            $filename = sprintf('tiny_%s.'.$fileExtension, random_int(1, 1000));
+            $Userphoto = request()->file('file')->storeAs('tiny', $filename, 'public');
+        }else {
+            $Userphoto = asset('storage/tiny/dummy.png');
+        }
+
+
+        if($Userphoto !== null) {
+        	return response()->json(["location" => asset('storage/'.$Userphoto)], 200);
+        }else {
+        	return response()->json(["location" => "File Not Uploaded"], 200);
+        }
+	});
 });
 
 
