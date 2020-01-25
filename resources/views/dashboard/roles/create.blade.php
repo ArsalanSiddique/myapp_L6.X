@@ -1,4 +1,4 @@
-@extends('layouts.dashboard')
+@extends('dashboard.layout')
 @section('content')
 <form action="{{route('roles.store')}}" method="POST" class="form-inline">
 	@csrf

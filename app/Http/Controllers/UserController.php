@@ -15,7 +15,7 @@ class UserController extends Controller
     public function index()
     {
         $users = \App\User::with(['roles','profile'])->get();
-        return view('users.index', compact('users'));
+        return view('dashboard.users.index', compact('users'));
     }
 
     /**
@@ -27,7 +27,7 @@ class UserController extends Controller
     {
         $roles = \App\Role::all();
         $countries = \App\Country::all();
-        return view('users.create', compact('roles', 'countries'));
+        return view('dashboard.users.create', compact('roles', 'countries'));
     }
 
     /**
@@ -79,7 +79,7 @@ class UserController extends Controller
     public function show($id)
     {
         $user = \App\User::with(['roles','profile'])->where('id', $id)->first();
-        return view('users.show', compact('user'));
+        return view('dashboard.users.show', compact('user'));
     }
 
     /**
@@ -93,7 +93,7 @@ class UserController extends Controller
         $user = \App\User::with(['roles','profile'])->where('id', $id)->first();
         $countries = \App\Country::all();
         $roles = \App\Role::all();
-        return view('users.edit', compact('user', 'countries', 'roles'));
+        return view('dashboard.users.edit', compact('user', 'countries', 'roles'));
     }
     
 

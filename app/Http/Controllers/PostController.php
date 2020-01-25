@@ -20,7 +20,7 @@ class PostController extends Controller
     public function index()
     {
         $posts = \App\Post::with(['categories','user'])->get();
-        return view('posts.index', compact('posts'));
+        return view('dashboard.posts.index', compact('posts'));
     }
 
     /**
@@ -31,7 +31,7 @@ class PostController extends Controller
     public function create()
     {
         $categories = Category::all();
-        return view('posts.create', compact('categories'));
+        return view('dashboard.posts.create', compact('categories'));
     }
 
     /**
@@ -77,7 +77,7 @@ class PostController extends Controller
     public function show($id)
     {
         $post = \App\Post::with(['categories','user'])->where('id', $id)->first();
-        return view('posts.show', compact('post'));
+        return view('dashboard.posts.show', compact('post'));
     }
 
     /**
@@ -90,7 +90,7 @@ class PostController extends Controller
     {
         $post = \App\Post::with(['categories','user'])->where('id', $id)->first();
         $categories = \App\Category::all();
-        return view('posts.edit', compact('post', 'categories'));
+        return view('dashboard.posts.edit', compact('post', 'categories'));
     }
     
 
@@ -115,6 +115,7 @@ class PostController extends Controller
         $post->title = $request->title;
         $post->content = $request->content;
         $post->thumbnail = $filename;
+        $post->slug = $request->title;
 
         if($post->save()) {
             $post->categories()->sync($request->categories);       

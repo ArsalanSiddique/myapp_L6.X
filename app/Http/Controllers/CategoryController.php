@@ -15,7 +15,7 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::with('children')->get();
-        return view('categories.index', compact('categories'));
+        return view('dashboard.categories.index', compact('categories'));
     }
 
     /**
@@ -26,7 +26,7 @@ class CategoryController extends Controller
     public function create()
     {
         $categories = Category::all();
-        return view('categories.create', compact('categories'));
+        return view('dashboard.categories.create', compact('categories'));
     }
 
     /**
@@ -67,7 +67,7 @@ class CategoryController extends Controller
     {
         $categories = Category::find($category)->first();
         // $categories = $categories[0];
-        return view('categories.show', compact('categories'));
+        return view('dashboard.categories.show', compact('categories'));
         // dd($categories[0]);
     }
 
@@ -80,7 +80,7 @@ class CategoryController extends Controller
     public function edit(Category $category)
     {
         $categories = Category::all();
-        return view('categories.edit', compact('category', 'categories'));
+        return view('dashboard.categories.edit', compact('category', 'categories'));
     }
 
     /**

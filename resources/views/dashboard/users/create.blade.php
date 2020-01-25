@@ -1,4 +1,4 @@
-@extends('layouts.dashboard')
+@extends('dashboard.layout')
 @section('content')
 <div class="col-md-8">
 	<div class="card panel-primary" style="box-shadow: 3px 3px 5px 6px #ccc;">

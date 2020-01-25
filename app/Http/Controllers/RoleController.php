@@ -14,7 +14,7 @@ class RoleController extends Controller
     public function index()
     {
         $roles = Role::orderBy('name', 'asc')->paginate(7);
-        return view('roles.index', compact('roles'));
+        return view('dashboard.roles.index', compact('roles'));
     }
 
     /**
@@ -24,7 +24,7 @@ class RoleController extends Controller
      */
     public function create()
     {
-        return view('roles.create');
+        return view('dashboard.roles.create');
     }
 
     /**
@@ -52,7 +52,7 @@ class RoleController extends Controller
     public function show($id)
     {
         $role = Role::find($id);
-        return view('roles.show', compact('role'));
+        return view('dashboard.roles.show', compact('role'));
     }
 
     /**
@@ -64,7 +64,7 @@ class RoleController extends Controller
     public function edit($id)
     {
         $role = Role::find($id);
-        return view('roles.edit', compact('role'));
+        return view('dashboard.roles.edit', compact('role'));
     }
 
     /**

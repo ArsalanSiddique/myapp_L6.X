@@ -1,4 +1,4 @@
-@extends('layouts.dashboard')
+@extends('dashboard.layout')
 @section('content')
       <h2>Section title</h2>
       <div class="table-responsive">
