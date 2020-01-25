@@ -5,72 +5,22 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreBlogPost;
 use App\Post;
+use App\Category;
 use DB;
 
 
 class PostController extends Controller
 {
-    /**
+
+/**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        // HTTP request path
-        // ===================================================================
-        // return $request->path();
-        // return $request->url();
-        // return $request->fullurl();  // http://localhost:8000/post?age=21&name=arsalan
-        // return $request->query('name'); // http://localhost:8000/post?age=21&name=arsalan
-        // return $request->input('name'); // http://localhost:8000/post?age=21&name=arsalan
-        
-        // checking request path
-        // ===================================================================
-        // if($request->is('post')) {
-        //     echo 'Request Is Accepted';
-        //     dd();
-        // }else {
-        //     echo 'Request Not Accepted';
-        //     dd();
-        // }
-        
-        // Detect request method
-        // ===================================================================
-        //  return $request->method();
-        // if($request->isMethod('GET')) {
-        //     echo 'Request Is Accepted'; 
-        //     dd();
-        // }else {
-        //     echo 'Request Not Accepted';
-        //     dd();
-        // }
-        
-
-        // CRUD Operations || RAW SQL QUERIES
-        // ===================================================================
-        // $profile = DB::select("SELECT * FROM profile");
-        // $profile = DB::select("SELECT * FROM profile WHERE id = ?", [2]);
-        // $profile = DB::select("SELECT * FROM profile WHERE id = :id AND name = :name", ["id" => 02, "name" => "Minhaj Ansari"]);
-        // $profile = DB::select("INSERT INTO profile (`name`, `city`, `country`) VALUES (:name, :city, :country)", ["name" => "Kamran", "city" => "Karachi", "country" => "Pakistan"]);
-        // $profile = DB::select("UPDATE profile SET `name` = 'Kashan Ahmed' WHERE id = :id", ["id" => 02]);
-        // $profile = DB::delete("DELETE FROM profile WHERE id = :id", ["id" => 02]);
-        // $profile = DB::statement('drop table users');
-        // dd($profile);
-
-
-        // QUERY BUILDER || Tinker || php artisan tinker
-        // ===================================================================
-        // $profile = DB::table('profile')->get();
-        // dd($profile);
-        // return view('posts.index', ["data" => $profile]);    // Pasing data to view
-
-
-        // Getting Data from model and pass it to view(index.blade.php)
-        // ===================================================================
-        // $posts = new Post();
-        // $data = $posts->data();
-        // return view('posts.index', compact('data'));
+        $posts = \App\Post::with(['categories','user'])->get();
+        return view('posts.index', compact('posts'));
     }
 
     /**
@@ -80,7 +30,8 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('posts.create');
+        $categories = Category::all();
+        return view('posts.create', compact('categories'));
     }
 
     /**
@@ -89,29 +40,32 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreBlogPost $request)
+    public function store(Request $request)
     {
-        // return $request->input('check');
-        // return $request->input('check.0');
-        // return $request->title;
+
+        if($request->hasFile('thumbnail')) {
+            $fileExtension = $request->File('thumbnail')->getClientOriginalExtension();
+            $filename = sprintf('thumbnail_%s.'.$fileExtension, random_int(1, 1000));
+            $filename = $request->file('thumbnail')->storeAs('posts', $filename, 'public');
+        }else {
+            $filename = 'posts/dummy.jpg';
+        }
+
+        $post = [
+            'user_id' => 1,
+            'title' => $request->title,
+            'content' => $request->content,
+            'thumbnail' => $filename,
+            'slug' => $request->title,
+        ];
+        $post = Post::create($post);
+
         
-        // ===========================================> STORE IMAGES
-        // return $request->file('profile')->store('images', 'public');
-        // $fileName = 'image_'.random_int(1, 1000).'.jpg';
-        // $request->file('profile')->storeAs('images', $fileName,'public');
+        if($post) {
+            $post->categories()->attach($request->categories);
+            return redirect()->route('posts.index');
+        }
 
-        // ===========================================> RESPONSE WITH HEADER
-        // return response('<h2>Hello Laravel 6.7</h2>', 200) ->
-        //     header('Content-Type', 'application/json');
-
-        // $data =  $request->all();
-        // return view('posts.show', compact('data'));
-
-        // ===========================================> RESPONSE WITH VALIDATION
-
-        $request->validated();
-        dd($request->all());
-        return back()->with('message','Your Form has submitted successfully.');
     }
 
     /**
@@ -122,14 +76,8 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        $data = [
-            'name' => 'Post Title comes here',
-            'content' => 'content of post comes here',
-            'gender' => 'Male',
-            'skills' => ['php', 'wordpress', 'laravel'],
-            'profile' => 'profile photo will comes here'
-        ];
-        return view('posts.show', compact('data'));
+        $post = \App\Post::with(['categories','user'])->where('id', $id)->first();
+        return view('posts.show', compact('post'));
     }
 
     /**
@@ -140,8 +88,11 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        //
+        $post = \App\Post::with(['categories','user'])->where('id', $id)->first();
+        $categories = \App\Category::all();
+        return view('posts.edit', compact('post', 'categories'));
     }
+    
 
     /**
      * Update the specified resource in storage.
@@ -150,9 +101,26 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreBlogPost $request, $id)
+    public function update(Request $request, $id)
     {
-        //
+        $post = \App\Post::find($id);
+        if($request->hasFile('thumbnail')) {
+            $fileExtension = $request->file('thumbnail')->getClientOriginalExtension();
+            $filename = sprintf('thumbnail_%s.jpg', random_int(1, 1000));
+            $filename = $request->file('thumbnail')->storeAs('posts', $filename, 'public');
+        }else {
+            $filename = $post->thumbnail;
+        }
+
+        $post->title = $request->title;
+        $post->content = $request->content;
+        $post->thumbnail = $filename;
+
+        if($post->save()) {
+            $post->categories()->sync($request->categories);       
+            return redirect()->route('posts.index');
+        }
+           
     }
 
     /**
@@ -163,6 +131,8 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
-    }
-}
+        $post = \App\Post::find($id);
+        $post->categories()->detach();
+        $post->delete();
+        return redirect()->route('posts.index');
+    }}
