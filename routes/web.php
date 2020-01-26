@@ -44,11 +44,11 @@ Route::get('/welcome/', 'WelcomeController@welcome');
 
 // resource controllers for CMS
 
-Route::prefix('admin')->group(function(){
+Route::prefix('admin')->middleware(['auth', 'password.confirm'])->group(function(){
 	Route::view('/', 'dashboard.admin');
 	Route::resource('posts', 'PostController');
 	Route::resource('roles', 'RoleController');
-	Route::resource('users', 'UserController');
+	Route::resource('users', 'UserController')->middleware(['auth','password.confirm']);
 	Route::resource('profile', 'UserProfileController');
 	Route::resource('pages', 'PageController');
 	Route::resource('categories', 'CategoryController');
@@ -72,30 +72,6 @@ Route::prefix('admin')->group(function(){
 });
 
 
+Auth::routes();
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Route::get('/home', 'HomeController@index')->name('home');

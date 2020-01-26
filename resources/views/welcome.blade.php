@@ -108,7 +108,7 @@
                      Laravel 6.7 {{-- $Company --}} {{-- $name --}}
                     
                 </div>
-                <div class="table-responsive">
+                <!-- <div class="table-responsive">
                         <table class="table table-hover table-bordered">
                             <thead>
                                 <tr>
@@ -121,19 +121,15 @@
                             </thead>
                             <tbody>
                                 @foreach($users as $user)
-                                    <!-- @if($user->profile->country != null) -->
+                                    
                                     <tr>
-                                        <td>{{$user->name}}</td>
-                                        <td>{{$user->email}}</td>
-                                        <td>{{$user->profile->phone}}</td>
-                                        <td>{{$user->profile->address}}</td>
-                                        <td>{{$user->profile->country->name}}</td>
+
                                     </tr>
-                                    <!-- @endif --> 
+                                    
                                 @endforeach
                             </tbody>
                        </table>
-                    </div>
+                    </div> -->
                 <div class="links">
                     <a href="https://laravel.com/docs">Docs</a>
                     <a href="https://laracasts.com">Laracasts</a>

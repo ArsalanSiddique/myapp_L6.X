@@ -11419,11 +11419,9 @@ a.text-dark:focus {
   }
 }
 
-.container {
-  max-width: 940px;
-  margin: auto;
-  padding: 20px;
-  background: #ccc;
+.logo {
+  background-color: white !important;
+  box-shadow: inset -1px 0 0 rgba(0, 0, 0, 0) !important;
 }
 
 body {

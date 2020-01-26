@@ -17,6 +17,7 @@
             <tr>
               <th>#</th>
               <th>Name</th>
+              <th>Username</th>
               <th>Thumbnail</th>
               <th>Email</th>
               <th>Phone</th>
@@ -34,13 +35,12 @@
         		<tr>
         			<td>{{$i}}</td>
         			<td>{{$user->name}}</td>
-              <!-- <td><img src="{{asset($user->profile->photo)}}" width="50" height="50" /></td> -->
-              <!-- <td><img src="{{asset('storage/app/public/profiles/photo_837.jpg')}}" width="50" height="50" /></td> -->
+              <td>{{$user->username}}</td>
               <td><img src="{{asset('storage/'.$user->profile->photo)}}" width="50" height="50" /></td>
               <td>{{$user->email}}</td>
-              <td>{{$user->profile->phone}}</td>
-              <td>{{$user->profile->city}}</td>              
-              <td>{{$user->country->name}}</td>
+              <td>{{$user->profile->phone ?? "N/A"}}</td>
+              <td>{{$user->profile->city ?? "N/A"}}</td>              
+              <td>{{$user->country->name ?? "N/A"}}</td>
               <td>
                 @if(!$user->roles->isEmpty())
                   {{$user->roles->implode('name', ', ')}}

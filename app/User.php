@@ -115,4 +115,14 @@ class User extends Authenticatable
         return $this->hasOneThrough(Country::class, UserProfile::class, 'user_id', 'id', 'id', 'country_id');
     }
 
+    public function setUsernameAttribute($username) {
+        $username = trim(preg_replace("/[^\w\d]+/i", "", $username), " ");
+        $count = User::where('username', 'like', "%{$username}%")->count();
+        if($count > 0)
+            $username = $username."-".($count+1);
+
+        $this->attributes['username'] =  strtolower($username);        
+    }
+
+
  }

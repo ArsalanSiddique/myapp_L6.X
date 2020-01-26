@@ -3,7 +3,7 @@
 <div class="col-md-8">
 	<div class="card panel-primary" style="box-shadow: 3px 3px 5px 6px #ccc;">
 		<div class="card-header">
-			<div class="card-title"> <h3><b>Add New User</b></h3> </div>
+			<div class="card-title"> <h3><b>Update User</b></h3> </div>
 		</div>
 		<div class="card-body">
 			<form action="{{route('users.update', $user->id)}}" method="POST" enctype="multipart/form-data">
