@@ -39,16 +39,16 @@ Route::redirect('/', '/welcome');	// (301 permenant & 302 temporary) for SEO
 // Route::view('/', 'welcome', ['name' => 'Arsalan','Company' => 'DevDesign']); 
 
 // controller
-Route::get('/welcome/', 'WelcomeController@welcome');
+Route::get('/welcome', 'WelcomeController@welcome');
 
 
 // resource controllers for CMS
 
-Route::prefix('admin')->middleware(['auth', 'password.confirm'])->group(function(){
+Route::prefix('admin')->middleware(['auth', 'password.confirm', 'verified'])->group(function(){
 	Route::view('/', 'dashboard.admin');
 	Route::resource('posts', 'PostController');
 	Route::resource('roles', 'RoleController');
-	Route::resource('users', 'UserController')->middleware(['auth','password.confirm']);
+	Route::resource('users', 'UserController');
 	Route::resource('profile', 'UserProfileController');
 	Route::resource('pages', 'PageController');
 	Route::resource('categories', 'CategoryController');
@@ -72,6 +72,6 @@ Route::prefix('admin')->middleware(['auth', 'password.confirm'])->group(function
 });
 
 
-Auth::routes();
+Auth::routes(["verify" => true]);
 
 Route::get('/home', 'HomeController@index')->name('home');
