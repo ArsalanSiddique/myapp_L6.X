@@ -44,6 +44,8 @@ return [
         'api' => [
             'driver' => 'token',
             'provider' => 'users',
+            'storage_key' => 'token',
+            'input_key' => 'token',
             'hash' => false,
         ],
     ],
@@ -111,7 +113,7 @@ return [
     | confirmation screen. By default, the timeout lasts for three hours.
     |
     */
-
+    
     'password_timeout' => 10800,
 
 ];

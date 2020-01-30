@@ -44,7 +44,7 @@ Route::get('/welcome', 'WelcomeController@welcome');
 
 // resource controllers for CMS
 
-Route::prefix('admin')->middleware(['auth', 'password.confirm', 'verified'])->group(function(){
+Route::prefix('admin')->middleware(['auth:web', 'password.confirm', 'verified'])->group(function(){
 	Route::view('/', 'dashboard.admin');
 	Route::resource('posts', 'PostController');
 	Route::resource('roles', 'RoleController');
@@ -74,4 +74,4 @@ Route::prefix('admin')->middleware(['auth', 'password.confirm', 'verified'])->gr
 
 Auth::routes(["verify" => true]);
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::match(['GET', 'POST'],'/home', 'HomeController@index')->name('home');
