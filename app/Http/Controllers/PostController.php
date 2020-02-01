@@ -7,6 +7,7 @@ use App\Http\Requests\StoreBlogPost;
 use App\Post;
 use App\Category;
 use DB;
+use Gate;
 
 
 class PostController extends Controller
@@ -88,7 +89,11 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        $post = \App\Post::with(['categories','user'])->where('id', $id)->first();
+        $post = \App\Post::with(['categories','user'])->where('id', $id)->orWhere('slug', $id)->first();
+        $response = Gate::inspect('updatePost', $post->user->id);
+        if($response->denied()) {
+            return redirect()->route('posts.index')->with('status','You are not authorized to edit this post');
+        }
         $categories = \App\Category::all();
         return view('dashboard.posts.edit', compact('post', 'categories'));
     }
@@ -133,6 +138,11 @@ class PostController extends Controller
     public function destroy($id)
     {
         $post = \App\Post::find($id);
+        $response = Gate::inspect('deletePost', $post->user->id);
+        if($response->denied()) {
+            return redirect()->route('posts.index')->with('status','You are not authorized to delete this post');
+        }
+
         $post->categories()->detach();
         $post->delete();
         return redirect()->route('posts.index');

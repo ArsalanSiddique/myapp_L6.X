@@ -15,4 +15,14 @@ class Role extends Model
     public function roles() {
         return $this->belongsToMany(User::class, 'role_user', 'role_id', 'user_id');
     }
+
+    public function setNameAttribute($val) {
+    	$val = strtolower($val);
+    	return $val;
+    }
+
+    public function getNameAttribute($val) {
+    	$val = strtolower($val);
+    	return $val;
+    }
 }

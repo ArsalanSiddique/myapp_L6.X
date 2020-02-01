@@ -17,6 +17,7 @@
             <tr>
               <th>#</th>
               <th>Title</th>
+              <th>Author</th>
               <th>Thumbnail</th>
               <th>Slug</th>
               <th>Categories</th>
@@ -31,6 +32,7 @@
         		<tr>
         			<td>{{$i}}</td>
         			<td>{{$post->title}}</td>
+              <td>{{$post->user["name"]}}</td>
                     <td><img src="{{asset('storage/'.$post->thumbnail)}}" width="50" height="50" /></td>
                     <td>{{$post->slug}}</td>
         			<td>
@@ -43,14 +45,16 @@
             			<td>{{$post->updated_at}}</td>
             			<td>
             				<div class="btn-group btn-sm" role="group" aria-label="Basic example" style="line-height: 32px; font-size:18px; color: blue;">
-            				  <a href="{{route('posts.show', $post->id)}}" role="button" class="btn btn-link">Show</a> |
-    						  <a href="{{route('posts.edit', $post->id)}}" role="button" class="btn btn-link">Edit</a> |
-    						  <form method="post" action="{{route('posts.destroy', $post->id)}}">
-    						  	@csrf
-    						  	@method('DELETE')
-    						  	<input type="submit" role="button" class="btn btn-link" value="Delete" />
-    						  </form>
-    						</div>
+            				  <a href="{{route('posts.show', $post->id)}}" role="button" class="btn btn-link">Show</a> 
+                      @can('updatePost', $post->user["id"]) |
+        						  <a href="{{route('posts.edit', $post->id)}}" role="button" class="btn btn-link">Edit</a> |
+        						  <form method="post" action="{{route('posts.destroy', $post->id)}}">
+        						  	@csrf
+        						  	@method('DELETE')
+        						  	<input type="submit" role="button" class="btn btn-link" value="Delete" />
+        						  </form>
+                      @endcan
+    						    </div>
             			</td>
         		    </tr>
         		<?php $i++; ?>

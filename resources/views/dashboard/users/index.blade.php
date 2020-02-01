@@ -17,11 +17,10 @@
             <tr>
               <th>#</th>
               <th>Name</th>
-              <th>Username</th>
+              <th>Verified</th>
               <th>Thumbnail</th>
               <th>Email</th>
               <th>Phone</th>
-              <th>City</th>
               <th>Country</th>
               <th>Roles</th>
               <th>Created At</th>
@@ -35,11 +34,10 @@
         		<tr>
         			<td>{{$i}}</td>
         			<td>{{$user->name}}</td>
-              <td>{{$user->username}}</td>
+              <td>{{$user->email_verified_at ?? "Not Verified"}}</td>
               <td><img src="{{asset('storage/'.$user->profile->photo)}}" width="50" height="50" /></td>
               <td>{{$user->email}}</td>
               <td>{{$user->profile->phone ?? "N/A"}}</td>
-              <td>{{$user->profile->city ?? "N/A"}}</td>              
               <td>{{$user->country->name ?? "N/A"}}</td>
               <td>
                 @if(!$user->roles->isEmpty())
@@ -51,13 +49,13 @@
         			<td>
         				<div class="btn-group btn-sm" role="group" aria-label="Basic example" style="line-height: 32px; font-size:18px; color: blue;">
         				  <a href="{{route('users.show', $user->id)}}" role="button" class="btn btn-link">Show</a> |
-						  <a href="{{route('users.edit', $user->id)}}" role="button" class="btn btn-link">Edit</a> |
-						  <form method="post" action="{{route('users.destroy', $user->id)}}">
-						  	@csrf
-						  	@method('DELETE')
-						  	<input type="submit" role="button" class="btn btn-link" value="Delete" />
-						  </form>
-						</div>
+						      <a href="{{route('users.edit', $user->id)}}" role="button" class="btn btn-link">Edit</a> |
+						      <form method="post" action="{{route('users.destroy', $user->id)}}">
+						  	     @csrf
+						  	     @method('DELETE')
+						  	     <input type="submit" role="button" class="btn btn-link" value="Delete" />
+						      </form>
+						    </div>
         			</td>
         		</tr>
         		<?php $i++; ?>

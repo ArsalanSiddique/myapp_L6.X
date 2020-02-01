@@ -44,7 +44,7 @@ Route::get('/welcome', 'WelcomeController@welcome');
 
 // resource controllers for CMS
 
-Route::prefix('admin')->middleware(['auth:web', 'password.confirm', 'verified'])->group(function(){
+Route::prefix('admin')->middleware(['auth:web', 'can:isAllowed,"admin:super admin"', 'verified'])->group(function(){
 	Route::view('/', 'dashboard.admin');
 	Route::resource('posts', 'PostController');
 	Route::resource('roles', 'RoleController');
