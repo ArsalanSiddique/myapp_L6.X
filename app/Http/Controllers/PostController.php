@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreBlogPost;
+use Illuminate\Support\Facades\Auth;
 use App\Post;
 use App\Category;
 use DB;
@@ -32,6 +33,10 @@ class PostController extends Controller
     public function create()
     {
         $categories = Category::all();
+        $response = Gate::inspect('createPost');
+        if($response->denied()) {
+            return redirect()->route('posts.index')->with('status', $response->message());
+        }
         return view('dashboard.posts.create', compact('categories'));
     }
 
@@ -92,7 +97,7 @@ class PostController extends Controller
         $post = \App\Post::with(['categories','user'])->where('id', $id)->orWhere('slug', $id)->first();
         $response = Gate::inspect('updatePost', $post->user->id);
         if($response->denied()) {
-            return redirect()->route('posts.index')->with('status','You are not authorized to edit this post');
+            return redirect()->route('posts.index')->with('status', $response->message());
         }
         $categories = \App\Category::all();
         return view('dashboard.posts.edit', compact('post', 'categories'));
@@ -140,7 +145,7 @@ class PostController extends Controller
         $post = \App\Post::find($id);
         $response = Gate::inspect('deletePost', $post->user->id);
         if($response->denied()) {
-            return redirect()->route('posts.index')->with('status','You are not authorized to delete this post');
+            return redirect()->route('posts.index')->with('status', $response->message());
         }
 
         $post->categories()->detach();

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\UserProfile;
+use Gate;
+use App\Http\Controllers\Auth;
 
 class UserController extends Controller
 {
@@ -25,6 +27,11 @@ class UserController extends Controller
      */
     public function create()
     {
+        // $user = Auth::id;
+        // $roles = $user->id->roles()->pluck('name')->toArray();
+        // if(in_array('super admin', $roles)) {
+        //     return redirect()->route('users.index')->with('status','You are not authorized to add user');
+        // }
         $roles = \App\Role::all();
         $countries = \App\Country::all();
         return view('dashboard.users.create', compact('roles', 'countries'));
@@ -91,6 +98,10 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = \App\User::with(['roles','profile'])->where('id', $id)->first();
+        $response = Gate::inspect('updatePost', $user->id);
+        if($response->denied()) {
+            return redirect()->route('users.index')->with('status','You are not authorized to edit this user');
+        }
         $countries = \App\Country::all();
         $roles = \App\Role::all();
         return view('dashboard.users.edit', compact('user', 'countries', 'roles'));
@@ -140,6 +151,10 @@ class UserController extends Controller
     public function destroy($id)
     {
         $user = \App\User::find($id);
+        $response = Gate::inspect('updatePost', $user->id);
+        if($response->denied()) {
+            return redirect()->route('users.index')->with('status','You are not authorized to delete this user');
+        }
         $user->profile()->delete();
         $user->roles()->detach();
         $user->delete();

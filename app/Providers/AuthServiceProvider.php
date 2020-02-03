@@ -46,6 +46,7 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define("isAllowed", "App\Gates\PostGates@allowed_users");
         Gate::define("updatePost", "App\Gates\PostGates@allow_editings");
         Gate::define("deletePost", "App\Gates\PostGates@allow_deleting");
+        Gate::define("createPost", "App\Gates\PostGates@allow_creating");
 
 
     }

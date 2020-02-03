@@ -48,13 +48,15 @@
         			<td>{{$user->updated_at}}</td>
         			<td>
         				<div class="btn-group btn-sm" role="group" aria-label="Basic example" style="line-height: 32px; font-size:18px; color: blue;">
-        				  <a href="{{route('users.show', $user->id)}}" role="button" class="btn btn-link">Show</a> |
+        				  <a href="{{route('users.show', $user->id)}}" role="button" class="btn btn-link">Show</a>
+                  @can('updatePost', $user->id) |
 						      <a href="{{route('users.edit', $user->id)}}" role="button" class="btn btn-link">Edit</a> |
 						      <form method="post" action="{{route('users.destroy', $user->id)}}">
 						  	     @csrf
 						  	     @method('DELETE')
 						  	     <input type="submit" role="button" class="btn btn-link" value="Delete" />
 						      </form>
+                  @endcan
 						    </div>
         			</td>
         		</tr>
