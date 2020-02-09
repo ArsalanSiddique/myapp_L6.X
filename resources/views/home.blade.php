@@ -9,7 +9,7 @@
 
                 <div class="card-body">
                     @if (session('status'))
-                        <div class="alert alert-success" role="alert">
+                        <div class="alert alert-info" role="alert">
                             {{ session('status') }}
                         </div>
                     @endif
@@ -19,7 +19,7 @@
                     <p><b>Decrypred Secret Key:</b> {{$secret ?? 'N\A'}}</p>
                     <form action="{{route('home')}}" method="POST">
                         @csrf
-                        <input type="text" class="form-control" name="secret" />
+                        <input type="text" class="form-control" name="secret" value="Enter Secret Key ( if N/A )" />
                         <input type="submit" name="" value="Generate Token And Update Secret Key" class="btn btn-outline-primary mt-1">
                     </form>
                 </div>

@@ -105,7 +105,7 @@
                 {{-- @endforeach --}}
                 <div class="title m-b-md">
                 
-                     Laravel 6.7 {{-- $Company --}} {{-- $name --}}
+                     Laravel 6 {{-- $Company --}} {{-- $name --}}
                     
                 </div>
                 <!-- <div class="table-responsive">
