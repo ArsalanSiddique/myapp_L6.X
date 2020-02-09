@@ -14,10 +14,13 @@
                         </div>
                     @endif
 
-                    <p>Token: {{request()->User()->token ?? 'N\A'}}</p>
+                    <p><b>Token:</b> {{request()->User()->token ?? 'N\A'}}</p>
+                    <p><b>Encrypted Secret Key:</b> {{request()->User()->secret ?? 'N\A'}}</p>
+                    <p><b>Decrypred Secret Key:</b> {{$secret ?? 'N\A'}}</p>
                     <form action="{{route('home')}}" method="POST">
                         @csrf
-                        <input type="submit" name="" value="Generate Token" class="btn btn-outline-primary mt-1">
+                        <input type="text" class="form-control" name="secret" />
+                        <input type="submit" name="" value="Generate Token And Update Secret Key" class="btn btn-outline-primary mt-1">
                     </form>
                 </div>
             </div>
