@@ -36,17 +36,20 @@
                     <td><img src="{{asset('storage/'.$post->thumbnail)}}" width="50" height="50" /></td>
                     <td>{{$post->slug}}</td>
         			<td>
-                    @foreach($post->categories as $cat)
-                        {{$cat->title}}
+<!--                     @foreach($post->categories as $cat)
+                        {{-- $cat->title --}}
                         <br/>
-                    @endforeach
+                    @endforeach -->
+                    @if(!$post->categories->isEmpty())
+                      {{$post->categories->implode('title', ', ')}}
+                    @endif
                     </td>
                     <td>{{$post->created_at}}</td>
             			<td>{{$post->updated_at}}</td>
             			<td>
             				<div class="btn-group btn-sm" role="group" aria-label="Basic example" style="line-height: 32px; font-size:18px; color: blue;">
             				  <a href="{{route('posts.show', $post->id)}}" role="button" class="btn btn-link">Show</a> 
-                      @can('updatePost', $post->user["id"]) |
+                      @can('view', $post) |
         						  <a href="{{route('posts.edit', $post->id)}}" role="button" class="btn btn-link">Edit</a> |
         						  <form method="post" action="{{route('posts.destroy', $post->id)}}">
         						  	@csrf

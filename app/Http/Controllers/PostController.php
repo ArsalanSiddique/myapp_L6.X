@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreBlogPost;
+use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Support\Facades\Auth;
 use App\Post;
 use App\Category;
@@ -14,7 +15,11 @@ use Gate;
 class PostController extends Controller
 {
 
-/**
+    public function __construct() {
+        $this->authorizeResource(Post::class, 'post');
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -33,10 +38,11 @@ class PostController extends Controller
     public function create()
     {
         $categories = Category::all();
-        $response = Gate::inspect('createPost');
-        if($response->denied()) {
-            return redirect()->route('posts.index')->with('status', $response->message());
-        }
+        // $response = Gate::inspect('create');
+        // if($response->denied()) {
+        //     // dd($response);
+        //     return redirect()->back()->with('status', 'You are not authorize to create post');
+        // }
         return view('dashboard.posts.create', compact('categories'));
     }
 
@@ -49,6 +55,10 @@ class PostController extends Controller
     public function store(Request $request)
     {
 
+        // $response = Gate::inspect('allowCreating', $post);
+        // if($response->denied()) {
+        //     return redirect()->route('posts.index')->with('status', $response->message());
+        // }
         if($request->hasFile('thumbnail')) {
             $fileExtension = $request->File('thumbnail')->getClientOriginalExtension();
             $filename = sprintf('thumbnail_%s.'.$fileExtension, random_int(1, 1000));
@@ -58,7 +68,7 @@ class PostController extends Controller
         }
 
         $post = [
-            'user_id' => 1,
+            'user_id' => Auth::id(),
             'title' => $request->title,
             'content' => $request->content,
             'thumbnail' => $filename,
@@ -92,13 +102,13 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Post $post)
     {
-        $post = \App\Post::with(['categories','user'])->where('id', $id)->orWhere('slug', $id)->first();
-        $response = Gate::inspect('updatePost', $post->user->id);
-        if($response->denied()) {
-            return redirect()->route('posts.index')->with('status', $response->message());
-        }
+        // $post = \App\Post::with(['categories','user'])->where('id', $id)->orWhere('slug', $id)->first();
+        // $response = Gate::inspect('update', $post);
+        // if($response->denied()) {
+        //     return redirect()->route('posts.index')->with('status', $response->message());
+        // }
         $categories = \App\Category::all();
         return view('dashboard.posts.edit', compact('post', 'categories'));
     }
@@ -111,9 +121,15 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Post $post)
     {
-        $post = \App\Post::find($id);
+        // $post = \App\Post::find($id);
+
+        // $response = Gate::inspect('update', $post);
+        // if($response->denied()) {
+        //     return redirect()->route('posts.index')->with('status', $response->message());
+        // }
+        
         if($request->hasFile('thumbnail')) {
             $fileExtension = $request->file('thumbnail')->getClientOriginalExtension();
             $filename = sprintf('thumbnail_%s.jpg', random_int(1, 1000));
@@ -140,14 +156,14 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Post $post)
     {
-        $post = \App\Post::find($id);
-        $response = Gate::inspect('deletePost', $post->user->id);
-        if($response->denied()) {
-            return redirect()->route('posts.index')->with('status', $response->message());
-        }
-
+        // $post = \App\Post::find($id);
+        // $response = Gate::inspect('delete', $post);
+        // if($response->denied()) {
+        //     dd($response);
+        //     return redirect()->back()->with('status', $response->message());
+        // }
         $post->categories()->detach();
         $post->delete();
         return redirect()->route('posts.index');

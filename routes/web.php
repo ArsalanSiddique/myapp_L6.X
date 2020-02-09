@@ -72,6 +72,6 @@ Route::prefix('admin')->middleware(['auth:web', 'can:isAllowed,"admin:super admi
 });
 
 
-Auth::routes(["verify" => true]);
+Auth::routes(["verify" => true, 'register' => false]);
 
 Route::match(['GET', 'POST'],'/home', 'HomeController@index')->name('home');
