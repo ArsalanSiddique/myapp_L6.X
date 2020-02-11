@@ -31,6 +31,7 @@ class PostPolicy
     public function view(User $user, Post $post)
     {
         return $user->id === $post->user_id;
+        return true;
     }
 
     /**

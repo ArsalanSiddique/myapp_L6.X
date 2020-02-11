@@ -12,6 +12,7 @@
 
 	  @if(!$posts->isEmpty())
       <div class="table-responsive">
+        <h5>{{$posts->total()}} of {{$posts->count()}} Posts shown</h5>
         <table class="table table-striped table-sm">
           <thead>
             <tr>
@@ -62,6 +63,7 @@
         		    </tr>
         		<?php $i++; ?>
         	@endforeach
+          <td colspan="9">{{$posts->links()}}</td>
           </tbody>
         </table>
       </div>

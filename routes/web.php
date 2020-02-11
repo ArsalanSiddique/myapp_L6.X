@@ -1,5 +1,5 @@
 <?php
-
+use App\Mail\WelcomeEmail;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -71,7 +71,10 @@ Route::prefix('admin')->middleware(['auth:web', 'can:isAllowed,"admin:super admi
 	});
 });
 
+Route::get('/email', function() {
+	return new WelcomeEmail();
+});
 
-Auth::routes(["verify" => true, 'register' => false]);
+Auth::routes(["verify" => true, 'register' => true]);
 
 Route::match(['GET', 'POST'],'/home', 'HomeController@index')->name('home');

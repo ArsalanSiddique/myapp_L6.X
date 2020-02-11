@@ -26,7 +26,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = \App\Post::with(['categories','user'])->get();
+        $posts = \App\Post::with(['categories','user'])->paginate(3);
         return view('dashboard.posts.index', compact('posts'));
     }
 

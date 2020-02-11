@@ -16,9 +16,9 @@ class CheckRole
     public function handle($request, Closure $next, ...$role)
     {
 
-        if( !$request->user()->roles()->whereIn('name', $role)->first() ) {
-            return redirect()->route('home')->with('status', 'You are not allowed here.');
-        }
+        // if( !$request->user()->roles()->whereIn('name', $role)->first() ) {
+        //     return redirect()->route('home')->with('status', 'You are not allowed here.');
+        // }
 
         return $next($request);
     }

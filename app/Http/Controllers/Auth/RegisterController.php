@@ -8,6 +8,8 @@ use App\UserProfile;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Mail;
+use App\Mail\WelcomeEmail;
 
 class RegisterController extends Controller
 {
@@ -81,7 +83,7 @@ class RegisterController extends Controller
 
         $user->profile()->save($userProfile);
         $user->roles()->attach(2);
-        
+        Mail::to($user)->send(new WelcomeEmail());
         return $user;
     }
 }
