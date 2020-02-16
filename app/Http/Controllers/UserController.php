@@ -57,7 +57,7 @@ class UserController extends Controller
         
 
         if($request->hasFile('photo')) {
-            $fileExtension = $request->File('photo')->getClientOriginalExtension();
+            $fileExtension = $request->file('photo')->getClientOriginalExtension();
             $filename = sprintf('photo_%s.'.$fileExtension, random_int(1, 1000));
             $Userphoto = $request->file('photo')->storeAs('profiles', $filename, 'public');
         }else {

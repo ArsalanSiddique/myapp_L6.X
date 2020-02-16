@@ -8,7 +8,6 @@
 		<div class="card-body">
 			<form action="{{route('users.store')}}" method="POST" enctype="multipart/form-data">
 				@csrf
-			    <form>
 			  <div class="form-group">
 			    <label for="inputUsername"><b>Username: </b></label>
 			    <input type="text" name="username" class="form-control" id="inputUserName">
